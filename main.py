@@ -94,19 +94,19 @@ class Game:
             self.render_end_scene(scene)
     
     def render_end_scene(self, scene):
-        print('[[end]]')
+        # print('[[end]]')
         bg = self.load_img(scene['image'])
         self.canvas.create_image(0, 0, image=bg, anchor='nw')
 
     def render_normal_scene(self, scene):
-        print('[[normal]]')
+        # print('[[normal]]')
         bg = self.load_img(scene['image'])
         self.canvas.create_image(0, 0, image=bg, anchor='nw')
         self.canvas.create_image(PLANE_X, PLANE_Y, image=self.res_plane, anchor='nw')
         self.canvas.create_text(TEXT_X, TEXT_Y, text=scene['text'], fill='white', anchor='nw')
     
     def render_select_scene(self, scene):
-        print('[[select]]')
+        # print('[[select]]')
         choices = scene['choice']
         self.canvas.create_image(PLANE1_X, PLANE1_Y, image=self.res_plane_little, anchor='nw')
         self.canvas.create_text(TEXT1_X, TEXT1_Y, text=choices[0]['text'], fill='white')   
@@ -136,8 +136,11 @@ class Game:
             if the_choice is not None:
                 self.vars[the_choice['var']] = the_choice['val']
                 self.render_next_scene()
+        elif self.current_scene()['type'] == 'end':
+            pass
         else:
-            print(self.current_scene())
+            t = self.current_scene()['type']
+            print(f'scene type "{t}" 未定义click事件')
 
     def start_render(self):
         self.render_next_scene()
