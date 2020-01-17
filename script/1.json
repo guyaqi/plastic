@@ -7,8 +7,13 @@
         },
         {
             "type": "normal",
-            "text": "You wake up in a dark room.中文",
+            "text": "经过了长时间的昏睡之后，你终于有了意识",
             "image": "black.png"
+        },
+        {
+            "type": "normal",
+            "text": "你醒了",
+            "image": "sur.png"
         },
         {
             "type": "select",
