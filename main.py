@@ -30,7 +30,7 @@ class Game:
             res = f.read()
         self.scenes = json.loads(res)['scenes']
         self.scene_index = -1
-        self.vars = {}
+        self.vars = {'_always':True}
 
         window = tk.Tk()
         window.title('ddmc')
@@ -90,7 +90,13 @@ class Game:
             self.render_normal_scene(scene)
         elif scene['type'] == 'select':
             self.render_select_scene(scene)
-        
+        elif scene['type'] == 'end':
+            self.render_end_scene(scene)
+    
+    def render_end_scene(self, scene):
+        print('[[end]]')
+        bg = self.load_img(scene['image'])
+        self.canvas.create_image(0, 0, image=bg, anchor='nw')
 
     def render_normal_scene(self, scene):
         print('[[normal]]')
@@ -103,10 +109,11 @@ class Game:
         print('[[select]]')
         choices = scene['choice']
         self.canvas.create_image(PLANE1_X, PLANE1_Y, image=self.res_plane_little, anchor='nw')
-        self.canvas.create_image(PLANE2_X, PLANE2_Y, image=self.res_plane_little, anchor='nw')
+        self.canvas.create_text(TEXT1_X, TEXT1_Y, text=choices[0]['text'], fill='white')   
 
-        self.canvas.create_text(TEXT1_X, TEXT1_Y, text=choices[0]['text'], fill='white')
-        self.canvas.create_text(TEXT2_X, TEXT2_Y, text=choices[1]['text'], fill='white')
+        if len(self.current_scene()['choice']) >= 2:
+            self.canvas.create_image(PLANE2_X, PLANE2_Y, image=self.res_plane_little, anchor='nw')
+            self.canvas.create_text(TEXT2_X, TEXT2_Y, text=choices[1]['text'], fill='white')
     
     def load_img(self, path):
         photo = ImageTk.PhotoImage(file=f'assets/{path}')
@@ -122,8 +129,9 @@ class Game:
 
             if PLANE1_X < e.x < PLANE1_X + LITTLE_PLANE_W and PLANE1_Y < e.y < PLANE1_Y + LITTLE_PLANE_H:
                 the_choice = self.current_scene()['choice'][0]
-            elif PLANE2_X < e.x < PLANE2_X + LITTLE_PLANE_W and PLANE2_Y < e.y < PLANE2_Y + LITTLE_PLANE_H:
-                the_choice = self.current_scene()['choice'][1]
+            if len(self.current_scene()['choice']) >= 2:
+                if PLANE2_X < e.x < PLANE2_X + LITTLE_PLANE_W and PLANE2_Y < e.y < PLANE2_Y + LITTLE_PLANE_H:
+                    the_choice = self.current_scene()['choice'][1]
             
             if the_choice is not None:
                 self.vars[the_choice['var']] = the_choice['val']

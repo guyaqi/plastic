@@ -11,43 +11,65 @@
             "image": "black.png"
         },
         {
+            "type": "select",
+            "choice": [
+                { "text": "睁开眼", "var": "_", "val": 0 }
+            ]
+        },
+        {
             "type": "normal",
-            "text": "你醒了",
+            "text": "你醒了，你已经是个女孩子了",
             "image": "sur.png"
         },
         {
             "type": "select",
             "choice": [
-                { "text": "stay here.停留", "var": "quit", "val": false },
-                { "text": "quit.离开", "var": "quit", "val": true }
+                { "text": "接受这个事实", "var": "v1", "val": 1 },
+                { "text": "我不相信！", "var": "v1", "val": 0 }
             ]
         },
         {
             "type": "action",
-            "go": { "anchor": "end-cold", "on": "quit", "equal": false }
+            "go": { "anchor": "touch_chest", "on": "v1", "equal": 0 }
         },
 
         {
             "type": "normal",
-            "text": "You are saved.",
+            "text": "你接受了这个事实并决定开启新的人生。",
             "image": "white.png"
         },
         {
-            "type": "end"
+            "type": "action",
+            "go": { "anchor": "s1_end", "on": "_always", "equal": true }
         },
 
 
         {
             "type": "anchor",
-            "name": "end-cold"
+            "name": "touch_chest"
         },
         {
             "type": "normal",
-            "text": "You feel cold.",
+            "text": "你不相信医生说的话，于是伸手摸了摸自己的胸。",
+            "image": "sur.png"
+        },
+        {
+            "type": "normal",
+            "text": "发现胸上缠着绷带，并且绷带下面是你不熟悉的隆起。",
+            "image": "sur.png"
+        },
+        {
+            "type": "normal",
+            "text": "你接受了这个事实并决定开启新的人生。",
             "image": "white.png"
         },
         {
-            "type": "end"
+            "type": "anchor",
+            "name": "s1_end"
+        },
+        {
+            "type": "end",
+            "image": "to_be_continued.png"
         }
     ]
 }
