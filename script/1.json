@@ -1,0 +1,48 @@
+{
+    "vars": ["quit"],
+    "scenes":[
+        {
+            "type": "anchor",
+            "name": "start"
+        },
+        {
+            "type": "normal",
+            "text": "You wake up in a dark room.中文",
+            "image": "black.png"
+        },
+        {
+            "type": "select",
+            "choice": [
+                { "text": "stay here.停留", "var": "quit", "val": false },
+                { "text": "quit.离开", "var": "quit", "val": true }
+            ]
+        },
+        {
+            "type": "action",
+            "go": { "anchor": "end-cold", "on": "quit", "equal": false }
+        },
+
+        {
+            "type": "normal",
+            "text": "You are saved.",
+            "image": "white.png"
+        },
+        {
+            "type": "end"
+        },
+
+
+        {
+            "type": "anchor",
+            "name": "end-cold"
+        },
+        {
+            "type": "normal",
+            "text": "You feel cold.",
+            "image": "white.png"
+        },
+        {
+            "type": "end"
+        }
+    ]
+}
